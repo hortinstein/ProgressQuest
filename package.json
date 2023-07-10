@@ -1,0 +1,13 @@
+{
+  "name": "progressquest",
+  "version": "0.0.1",
+  "description": "scrapes and logs diablo 4 data",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.26.0",
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1"
+  }
+}
