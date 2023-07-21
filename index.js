@@ -70,7 +70,7 @@ async function main() {
     const { data: acctData, error } = await axios.get(scrapeUrl);
     if (error) console.error("Error: ", error);
     else {
-      // insertAcctJSON(name, acctData);
+      await insertAcctJSON(name, acctData);
       for (const char of acctData.characters) {
         console.log("time difference: ", timeDifference(char.lastUpdate).hours);
         console.log(char);
@@ -79,7 +79,7 @@ async function main() {
         if (error) console.error("Error: ", error);
         else {
           console.log("posting char data:" + charData.character);
-          // await insertCharJSON(name, charData);
+          await insertCharJSON(name, charData);
         }
       }
     }
