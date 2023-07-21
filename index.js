@@ -38,6 +38,25 @@ export async function insertCharJSON(player, charJSON) {
   if (error) console.error("Error: ", error);
 }
 
+function timeDifference(time) {
+  const givenTime = new Date(time);
+  const currentTime = new Date();
+
+  const differenceInMilliseconds = currentTime - givenTime;
+  const differenceInSeconds = differenceInMilliseconds / 1000;
+  const differenceInMinutes = differenceInSeconds / 60;
+  const differenceInHours = differenceInMinutes / 60;
+  const differenceInDays = differenceInHours / 24;
+
+  return {
+    milliseconds: differenceInMilliseconds,
+    seconds: differenceInSeconds,
+    minutes: differenceInMinutes,
+    hours: differenceInHours,
+    days: differenceInDays,
+  };
+}
+
 async function fetchJsonData(url) {
   const { data } = await axios.get(url);
   return data;
@@ -51,15 +70,16 @@ async function main() {
     const { data: acctData, error } = await axios.get(scrapeUrl);
     if (error) console.error("Error: ", error);
     else {
-      insertAcctJSON(name, acctData);
+      // insertAcctJSON(name, acctData);
       for (const char of acctData.characters) {
+        console.log("time difference: ", timeDifference(char.lastUpdate).hours);
         console.log(char);
         const charURL = scrapeUrl + "/" + char.id;
         const { data: charData, error } = await axios.get(charURL);
         if (error) console.error("Error: ", error);
         else {
           console.log("posting char data:" + charData.character);
-          await insertCharJSON(name, charData);
+          // await insertCharJSON(name, charData);
         }
       }
     }
@@ -69,7 +89,6 @@ async function main() {
 const second = 1000;
 const minute = 60 * 1000;
 const hour = 60 * minute;
-const hours = 24;
 
 main().catch(console.error);
-setInterval(() => main().catch(console.error), 12 * hours);
+setInterval(() => main().catch(console.error), 12 * hour);
